@@ -57,19 +57,35 @@ var getMaxElement = function (results) {
   return maxElement;
 };
 
+var getRandomColor = function () {
+  var barColor = 'hsl(240,' + Math.round(Math.random() * 100) + '%,50%)';
+  return barColor;
+};
+
+var renderBar = function (ctx, results, counter) {
+  var maxTime = getMaxElement(results);
+  var barHeight = BAR_MAX_HEIGHT * (results[counter] / maxTime);
+  ctx.fillRect(CLOUD_X + BAR_GAP * (counter + 1) + BAR_WIDTH * counter, CLOUD_Y + CLOUD_HEIGHT - BAR_BOTTOM_MARGIN - barHeight, BAR_WIDTH, barHeight);
+
+};
+
+var renderBarText = function (ctx, players, results, counter, textColor) {
+  ctx.fillStyle = textColor;
+  var maxTime = getMaxElement(results);
+  var barHeight = BAR_MAX_HEIGHT * (results[counter] / maxTime);
+  ctx.fillText(players[counter], CLOUD_X + BAR_GAP * (counter + 1) + BAR_WIDTH * (counter + 0.5), CLOUD_Y + CLOUD_HEIGHT - BAR_TEXT_BOTTOM_MARGIN);
+  ctx.fillText(Math.round(results[counter]), CLOUD_X + BAR_GAP * (counter + 1) + BAR_WIDTH * (counter + 0.5), CLOUD_Y + CLOUD_HEIGHT - BAR_BOTTOM_MARGIN - barHeight - BAR_TOP_MARGIN);
+};
+
 window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx);
-  var maxTime = getMaxElement(times);
+
   for (var i = 0; i < names.length; i++) {
-    var barColor = 'hsl(240,' + Math.round(Math.random() * 100) + '%,50%)';
-    ctx.fillStyle = barColor;
+    ctx.fillStyle = getRandomColor();
     if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     }
-    var barHeight = BAR_MAX_HEIGHT * (times[i] / maxTime);
-    ctx.fillRect(CLOUD_X + BAR_GAP * (i + 1) + BAR_WIDTH * i, CLOUD_Y + CLOUD_HEIGHT - BAR_BOTTOM_MARGIN - barHeight, BAR_WIDTH, barHeight);
-    ctx.fillStyle = 'black';
-    ctx.fillText(names[i], CLOUD_X + BAR_GAP * (i + 1) + BAR_WIDTH * (i + 0.5), CLOUD_Y + CLOUD_HEIGHT - BAR_TEXT_BOTTOM_MARGIN);
-    ctx.fillText(Math.round(times[i]), CLOUD_X + BAR_GAP * (i + 1) + BAR_WIDTH * (i + 0.5), CLOUD_Y + CLOUD_HEIGHT - BAR_BOTTOM_MARGIN - barHeight - BAR_TOP_MARGIN);
+    renderBar(ctx, times, i);
+    renderBarText(ctx, names, times, i, 'black');
   }
 };
