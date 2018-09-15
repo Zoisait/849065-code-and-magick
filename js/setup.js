@@ -1,11 +1,11 @@
 'use strict';
 
-var WIZARDSNUMBER = 4;
-var WIZARDNAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var WIZARDSURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var WIZARDCOATCOLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var WIZARDEYESCOLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-var FIREBALLCOLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var WIZARDS_NUMBER = 4;
+var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+var WIZARD_COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var WIZARD_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
@@ -27,13 +27,13 @@ var generateWizard = function (names, surnames, coats, eyes) {
 var generateRandomWizards = function (quantity) {
   var wizards = [];
   for (var i = 1; i <= quantity; i++) {
-    var wizard = generateWizard(WIZARDNAMES, WIZARDSURNAMES, WIZARDCOATCOLORS, WIZARDEYESCOLORS);
+    var wizard = generateWizard(WIZARD_NAMES, WIZARD_SURNAMES, WIZARD_COAT_COLORS, WIZARD_EYES_COLORS);
     wizards.push(wizard);
   }
   return wizards;
 };
 
-var wizards = generateRandomWizards(WIZARDSNUMBER);
+var wizards = generateRandomWizards(WIZARDS_NUMBER);
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 var wizardsList = document.createDocumentFragment();
@@ -54,7 +54,7 @@ var createWizardsList = function (quantity) {
 };
 
 var renderWizards = function () {
-  createWizardsList(WIZARDSNUMBER);
+  createWizardsList(WIZARDS_NUMBER);
   similarListElement.appendChild(wizardsList);
 };
 
@@ -129,11 +129,11 @@ var currentCoat = 0;
 
 var changeWizardCoat = function () {
   currentCoat++;
-  if (currentCoat === WIZARDCOATCOLORS.length) {
+  if (currentCoat === WIZARD_COAT_COLORS.length) {
     currentCoat = 0;
   }
-  wizardCoatChoise.style.fill = WIZARDCOATCOLORS[currentCoat];
-  setup.querySelector('input[name=coat-color]').value = WIZARDCOATCOLORS[currentCoat];
+  wizardCoatChoise.style.fill = WIZARD_COAT_COLORS[currentCoat];
+  setup.querySelector('input[name=coat-color]').value = WIZARD_COAT_COLORS[currentCoat];
 };
 
 wizardCoatChoise.addEventListener('click', function () {
@@ -145,11 +145,11 @@ var currentEyes = 0;
 
 var changeWizardEyes = function () {
   currentEyes++;
-  if (currentEyes === WIZARDEYESCOLORS.length) {
+  if (currentEyes === WIZARD_EYES_COLORS.length) {
     currentEyes = 0;
   }
-  wizardEyesChoise.style.fill = WIZARDEYESCOLORS[currentEyes];
-  setup.querySelector('input[name=eyes-color]').value = WIZARDEYESCOLORS[currentEyes];
+  wizardEyesChoise.style.fill = WIZARD_EYES_COLORS[currentEyes];
+  setup.querySelector('input[name=eyes-color]').value = WIZARD_EYES_COLORS[currentEyes];
 };
 
 wizardEyesChoise.addEventListener('click', function () {
@@ -161,11 +161,11 @@ var currentFireballColor = 0;
 
 var changeFireballColor = function () {
   currentFireballColor++;
-  if (currentFireballColor === FIREBALLCOLORS.length) {
+  if (currentFireballColor === FIREBALL_COLORS.length) {
     currentFireballColor = 0;
   }
-  fireballColorChoise.style.backgroundColor = FIREBALLCOLORS[currentFireballColor];
-  setup.querySelector('input[name=fireball-color]').value = FIREBALLCOLORS[currentFireballColor];
+  fireballColorChoise.style.backgroundColor = FIREBALL_COLORS[currentFireballColor];
+  setup.querySelector('input[name=fireball-color]').value = FIREBALL_COLORS[currentFireballColor];
 };
 
 fireballColorChoise.addEventListener('click', function () {
