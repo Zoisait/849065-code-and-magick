@@ -8,6 +8,9 @@ var WIZARD_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
+var SETUP_POSITION_TOP = '80px';
+var SETUP_POSITION_LEFT = '50%';
+
 
 var getRandomInt = function (max, min) {
   if (!min) {
@@ -80,6 +83,8 @@ var openPopup = function () {
 var closePopup = function () {
   setup.classList.add('hidden');
   document.removeEventListener('keydown', setupCloseHandler);
+  setup.style.top = SETUP_POSITION_TOP;
+  setup.style.left = SETUP_POSITION_LEFT;
 };
 
 setupOpen.addEventListener('click', function () {
@@ -171,3 +176,4 @@ var changeFireballColor = function () {
 fireballColorChoise.addEventListener('click', function () {
   changeFireballColor();
 });
+
