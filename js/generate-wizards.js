@@ -20,6 +20,7 @@
 
   // var wizards = generateRandomWizards(window.util.WIZARDS_NUMBER);
 
+  var wizardsData = [];
   var similarListElement = document.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
   var wizardsList = document.createDocumentFragment();
@@ -28,7 +29,7 @@
     var wizardElement = similarWizardTemplate.cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = wizards[i].name;
     wizardElement.querySelector('.wizard-coat').style.fill = wizards[i].colorCoat;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizards[i].eyesColor;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizards[i].colorEyes;
     wizardsList.appendChild(wizardElement);
   };
 
@@ -36,12 +37,24 @@
     for (var i = 0; i < quantity; i++) {
       var wizardselected = window.getRandomInt(wizards.length - 1);
       createWizard(wizards, wizardselected);
-      wizards.splice(wizardselected, 1);
+      // wizards.splice(wizardselected, 1);
     }
     similarListElement.appendChild(wizardsList);
   };
 
+  window.updateWizards = function (newWizards, quantity) {
+    wizardsList = document.createDocumentFragment();
+    for (var i = 0; i < quantity; i++) {
+      var deletedNode = document.querySelector('.setup-similar-item');
+      similarListElement.removeChild(deletedNode);
+      createWizard(newWizards, i);
+    }
+    similarListElement.appendChild(wizardsList);
+
+  };
+
   var successHandler = function (serverwizards) {
+    wizardsData = serverwizards;
     renderWizards(serverwizards, window.util.WIZARDS_NUMBER);
   };
 
@@ -57,5 +70,29 @@
   };
 
   window.load(successHandler, errorHandler);
+
+  var getRank = function (wizard) {
+    var rank = 0;
+
+    if (wizard.colorCoat === window.coatChosen) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === window.eyesChosen) {
+      rank += 1;
+    }
+
+    return rank;
+  };
+
+  window.selectWizards = function () {
+    var selectedWizards = wizardsData.slice().sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = wizardsData.indexOf(left) - wizardsData.indexOf(right);
+      }
+      return rankDiff;
+    });
+    return selectedWizards;
+  };
 
 })();

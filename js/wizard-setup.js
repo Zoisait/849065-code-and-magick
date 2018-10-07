@@ -4,6 +4,8 @@
   var setup = document.querySelector('.setup');
   var wizardCoatChoise = setup.querySelector('.wizard-coat');
   var currentCoat = 0;
+  window.coatChosen = window.util.WIZARD_COAT_COLORS[0];
+  window.eyesChosen = window.util.WIZARD_EYES_COLORS[0];
 
   var changeWizardCoat = function () {
     currentCoat++;
@@ -12,6 +14,9 @@
     }
     wizardCoatChoise.style.fill = window.util.WIZARD_COAT_COLORS[currentCoat];
     setup.querySelector('input[name=coat-color]').value = window.util.WIZARD_COAT_COLORS[currentCoat];
+    window.coatChosen = window.util.WIZARD_COAT_COLORS[currentCoat];
+    var selectedWizards = window.selectWizards();
+    window.debounce(selectedWizards);
   };
 
   wizardCoatChoise.addEventListener('click', function () {
@@ -28,6 +33,9 @@
     }
     wizardEyesChoise.style.fill = window.util.WIZARD_EYES_COLORS[currentEyes];
     setup.querySelector('input[name=eyes-color]').value = window.util.WIZARD_EYES_COLORS[currentEyes];
+    window.eyesChosen = window.util.WIZARD_EYES_COLORS[currentEyes];
+    var selectedWizards = window.selectWizards();
+    window.debounce(selectedWizards);
   };
 
   wizardEyesChoise.addEventListener('click', function () {
@@ -48,6 +56,7 @@
 
   fireballColorChoise.addEventListener('click', function () {
     changeFireballColor();
+    // window.updateWizards(window.util.WIZARDS_NUMBER);
   });
 
 })();
